@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+    version="1.1"
+    creator="RouteLens"
+    xmlns="http://www.topografix.com/GPX/1/1">
+
+    <trk>
+        <name>Chiang Mai Test Route</name>
+
+        <trkseg>
+
+            <trkpt lat="18.7883" lon="98.9853">
+                <ele>310</ele>
+                <time>2026-09-30T08:00:00Z</time>
+            </trkpt>
+
+            <trkpt lat="18.7950" lon="98.9900">
+                <ele>325</ele>
+                <time>2026-09-30T08:05:00Z</time>
+            </trkpt>
+
+            <trkpt lat="18.8030" lon="98.9950">
+                <ele>350</ele>
+                <time>2026-09-30T08:10:00Z</time>
+            </trkpt>
+
+            <trkpt lat="18.8120" lon="99.0010">
+                <ele>380</ele>
+                <time>2026-09-30T08:15:00Z</time>
+            </trkpt>
+
+            <trkpt lat="18.8210" lon="99.0080">
+                <ele>410</ele>
+                <time>2026-09-30T08:20:00Z</time>
+            </trkpt>
+
+        </trkseg>
+    </trk>
+
+</gpx>
