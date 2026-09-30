@@ -1,7 +1,8 @@
 import "./style.css"
-
+import { renderRouteMap } from "./map"
 import { analyzeGPX } from "./api"
 import type { GPXAnalysis } from "./types"
+import { renderElevationChart } from "./chart"
 
 
 const app = document.querySelector<HTMLDivElement>("#app")
@@ -219,5 +220,24 @@ function renderAnalysis(
       </div>
 
     </div>
+    <div class="map-section">
+      <h3>Route Map</h3>
+      <div id="route-map"></div>
+    </div>
+    <div class="elevation-section">
+  <h3>Elevation Profile</h3>
+
+  <div class="chart-container">
+    <canvas id="elevation-chart"></canvas>
+  </div>
+  </div>
   `
+  renderRouteMap(
+  "route-map",
+  analysis.geometry
+)
+  renderElevationChart(
+  "elevation-chart",
+  analysis.elevation_profile
+)
 }
