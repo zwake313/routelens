@@ -47,6 +47,10 @@ def analyze_gpx(gpx_content: str) -> dict:
 
     route_name = None
 
+    features = []
+    elevation_profile = []
+    cumulative_distance_m = 0.0
+
     for track in gpx.tracks:
         if route_name is None and track.name:
             route_name = track.name
@@ -55,26 +59,69 @@ def analyze_gpx(gpx_content: str) -> dict:
 
         for segment in track.segments:
             points = segment.points
+            coordinates = []
 
             point_count += len(points)
 
             for point in points:
+                coordinates.append([
+                    point.longitude,
+                    point.latitude
+                ])
+
                 if point.elevation is not None:
                     elevations.append(point.elevation)
 
                 if point.time is not None:
                     timestamps.append(point.time)
+            
+            if len(coordinates) >= 2:
+                features.append({
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": coordinates
+                    }
+                })
+
+            if points and points[0].elevation is not None:
+                elevation_profile.append({
+                    "distance_km": round(
+                        cumulative_distance_m / 1000,
+                        3
+                    ),
+                    "elevation_m": round(
+                        points[0].elevation,
+                        1
+                    )
+                })
 
             for index in range(1, len(points)):
                 previous = points[index - 1]
                 current = points[index]
 
-                total_distance_m += haversine_distance(
+                segment_distance_m = haversine_distance(
                     previous.latitude,
                     previous.longitude,
                     current.latitude,
                     current.longitude
                 )
+
+                total_distance_m += segment_distance_m
+                cumulative_distance_m += segment_distance_m
+
+                if current.elevation is not None:
+                    elevation_profile.append({
+                        "distance_km": round(
+                            cumulative_distance_m / 1000,
+                            3
+                        ),
+                        "elevation_m": round(
+                            current.elevation,
+                            1
+                        )
+                    })
 
                 if (
                     previous.elevation is not None
@@ -112,44 +159,59 @@ def analyze_gpx(gpx_content: str) -> dict:
             ) / duration_hours
 
     return {
-        "route_name": route_name,
-        "track_count": track_count,
-        "segment_count": segment_count,
-        "stats": {
-            "distance_km": round(
-                total_distance_m / 1000,
-                2
-            ),
-            "elevation_gain_m": (
-                round(elevation_gain_m, 1)
-                if elevations
-                else None
-            ),
-            "elevation_loss_m": (
-                round(elevation_loss_m, 1)
-                if elevations
-                else None
-            ),
-            "min_elevation_m": (
-                round(min_elevation_m, 1)
-                if min_elevation_m is not None
-                else None
-            ),
-            "max_elevation_m": (
-                round(max_elevation_m, 1)
-                if max_elevation_m is not None
-                else None
-            ),
-            "duration_seconds": (
-                round(duration_seconds, 1)
-                if duration_seconds is not None
-                else None
-            ),
-            "average_speed_kmh": (
-                round(average_speed_kmh, 2)
-                if average_speed_kmh is not None
-                else None
-            ),
-            "point_count": point_count,
-        },
-    }
+    "route_name": route_name,
+    "track_count": track_count,
+    "segment_count": segment_count,
+
+    "stats": {
+        "distance_km": round(
+            total_distance_m / 1000,
+            2
+        ),
+
+        "elevation_gain_m": (
+            round(elevation_gain_m, 1)
+            if elevations
+            else None
+        ),
+
+        "elevation_loss_m": (
+            round(elevation_loss_m, 1)
+            if elevations
+            else None
+        ),
+
+        "min_elevation_m": (
+            round(min_elevation_m, 1)
+            if min_elevation_m is not None
+            else None
+        ),
+
+        "max_elevation_m": (
+            round(max_elevation_m, 1)
+            if max_elevation_m is not None
+            else None
+        ),
+
+        "duration_seconds": (
+            round(duration_seconds, 1)
+            if duration_seconds is not None
+            else None
+        ),
+
+        "average_speed_kmh": (
+            round(average_speed_kmh, 2)
+            if average_speed_kmh is not None
+            else None
+        ),
+
+        "point_count": point_count
+    },
+
+    "geometry": {
+        "type": "FeatureCollection",
+        "features": features
+    },
+
+    "elevation_profile": elevation_profile
+}
