@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #f5f6f3;
+  color: #1f2721;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.page {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 72px 0;
+}
+
+.hero {
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+h1 {
+  margin: 8px 0;
+
+  font-size: clamp(
+    3rem,
+    8vw,
+    6rem
+  );
+
+  line-height: 0.95;
+}
+
+.subtitle {
+  max-width: 600px;
+
+  font-size: 1.15rem;
+  line-height: 1.6;
+
+  color: #5b655d;
+}
+
+.upload-panel {
+  padding: 32px;
+
+  border: 1px solid #d9ddd8;
+  border-radius: 16px;
+
+  background: white;
+}
+
+.upload-label {
+  display: block;
+
+  margin-bottom: 16px;
+
+  font-weight: 600;
+}
+
+#gpx-file {
+  display: block;
+
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 20px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #1f2721;
+  color: white;
+
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.results {
+  margin-top: 48px;
+}
+
+.hidden {
+  display: none;
+}
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(180px, 1fr)
+    );
+
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px;
+
+  border: 1px solid #d9ddd8;
+  border-radius: 12px;
+
+  background: white;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  margin-top: 6px;
+
+  font-size: 0.85rem;
+
+  color: #69736b;
+}
