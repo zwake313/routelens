@@ -21,15 +21,20 @@ Users can upload a `.gpx` file and immediately inspect route distance, elevation
 
 ## Demo
 
+## Demo
+
+**Live application:** https://routelens-six.vercel.app 
+**API documentation:** https://routelens-api.onrender.com/docs
+
 ## Screenshots
 
 ### Route Analysis
 
-Coming Soon!
+![RouteLens route analysis](docs/images/route-analysis.png)
 
 ### Elevation Profile
 
-Coming Soon!
+![RouteLens elevation profile](docs/images/elevation-profile.png)
 
 ## Tech Stack
 
